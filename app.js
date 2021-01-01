@@ -12,6 +12,10 @@ const app = express();
 
 require("dotenv/config");
 
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+}
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -49,6 +53,11 @@ cloudinary.config({
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 
 // cloudinary.uploader.upload("public/images/alex-grey-background.jpg", function (error, result) {
 //   console.log(result, error);
