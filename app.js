@@ -1,15 +1,14 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-// var cloudinary = require("cloudinary").v2;
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cloudinary = require("cloudinary").v2;
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var photosRouter = require("./routes/photos");
+const indexRouter = require("./routes/index");
+const photosRouter = require("./routes/photos");
 
-var app = express();
+const app = express();
 
 require("dotenv/config");
 
@@ -25,7 +24,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //ROUTES
 app.use("/", indexRouter);
-app.use("/api/users", usersRouter);
 app.use("/api/photos", photosRouter);
 
 // catch 404 and forward to error handler
@@ -46,28 +44,32 @@ app.use(function (err, req, res, next) {
 
 // CONNECT TO CLOUDINARY AND UPLOAD ASSETS
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-// });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 // cloudinary.uploader.upload("public/images/alex-grey-background.jpg", function (error, result) {
 //   console.log(result, error);
 // });
 
-// cloudinary.api.resources(
-//   function(error, result) {console.log(result, error); });
+// cloudinary.api.resources(function (error, result) {
+//   if (error) {
+//     console.error(error);
+//   } else {
+//     console.log(result.resources);
+//   }
+// });
 
 // cloudinary.search
 //   .expression("folder:portfolio")
-//   // .sort_by('public_id','desc')
-//   // .with_field("tags")
-  
-//   // .aggregate('url')
+//   .sort_by("public_id", "desc")
+//   .with_field("tags")
+//   .aggregate("url")
 //   .execute()
 //   .then((result) => {
-//     const arr = result.resources.map(data => data );
+//     const arr = result.resources.map((data) => data);
 //     console.log(arr);
 //   });
 
